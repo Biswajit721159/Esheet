@@ -1,4 +1,4 @@
-let mongoose,{ Schema, model } = require("mongoose");
+let { Schema, model } = require("mongoose");
 let jwt = require("jsonwebtoken");
 let bcrypt = require("bcrypt");
 
@@ -72,21 +72,6 @@ userSchema.methods.generateAccessToken = function () {
 	);
 	return data;
 };
-
-// userSchema.methods.generateRefreshToken = function(){
-//     const refreshTokenPayload = {
-//         _id: this._id,
-//     };
-
-//     const refreshTokenOptions = {
-//         expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
-//     };
-
-//     const refreshToken = jwt.sign(refreshTokenPayload, process.env.REFRESH_TOKEN_SECRET, refreshTokenOptions);
-
-//     console.log("Refresh Token Value:", refreshToken);
-//     return refreshToken;
-// }
 
 userSchema.pre("save", async function (next) {
 	if (!this.isModified("OTP")) return next();

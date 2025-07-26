@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
 import { TextField, Button, FormControl, InputLabel, Select, MenuItem, Box, Typography } from '@mui/material';
+import { toast } from 'react-toastify';
+import { createOrg } from '../apis/organizations';
+import FullPageLoader from '../Loader/FullPageLoader';
 
 const CreateOrganization = () => {
   const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [organizationName, setOrganizationName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log({
-      organizationName,
-      userName,
-      phoneNumber,
-      email,
-    });
-    alert('Form submitted! Check console for data.');
+    try {
+      setLoading(true);
+      let data = await createOrg({ userName, email, organizationName, phoneNumber });
+      toast.success('Organization created successfully');
+    } catch (error) {
+      toast.error(error?.message || 'Something went wrong');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -30,7 +36,7 @@ const CreateOrganization = () => {
         }}
       >
         <Typography variant="h5" component="h1" className="text-center text-gray-800 font-inter font-bold">
-          Create Organization User
+          Create Organization
         </Typography>
 
         <TextField
@@ -95,6 +101,7 @@ const CreateOrganization = () => {
         >
           Create User
         </Button>
+        <FullPageLoader open={loading} />
       </Box>
     </div>
   );

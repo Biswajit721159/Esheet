@@ -9,7 +9,7 @@ const Navbar = () => {
   const links = ["Home", "Create user", "About", "Contact"];
 
   return (
-    <nav className="bg-yellow-400 text-white">
+    <nav className="bg-blue-400 text-white">
       <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center space-x-4">
           <IconButton onClick={() => setOpen(true)} className="text-white">
@@ -36,6 +36,9 @@ const Navbar = () => {
           </Link>
            <Link  to="/CreateOrganization" onClick={() => setOpen(false)} className="hover:text-gray-500">
               Create Organization
+          </Link>
+          <Link  to="/Organizations" onClick={() => setOpen(false)} className="hover:text-gray-500">
+              Organizations
           </Link>
         </div>
       </div>

@@ -1,111 +1,137 @@
-import React from "react";
-import { Button, Card, CardContent, Typography, Grid } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import {
+  Card,
+  CardContent,
+  Typography,
+  Button,
+  Modal,
+  Box,
+  TextField,
+  IconButton,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Paper,
+} from '@mui/material';
+import { Add, Edit } from '@mui/icons-material';
 
-const Home = () => {
+const UserHomePage = () => {
+  const [packs, setPacks] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [currentPack, setCurrentPack] = useState({ name: '', description: '', id: null });
+
+  const handleOpenModal = (pack = null) => {
+    if (pack) {
+      setCurrentPack(pack);
+      setIsEditing(true);
+    } else {
+      setCurrentPack({ name: '', description: '', id: null });
+      setIsEditing(false);
+    }
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const handleChange = (e) => {
+    setCurrentPack({ ...currentPack, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = () => {
+    if (isEditing) {
+      setPacks(packs.map((p) => (p.id === currentPack.id ? currentPack : p)));
+    } else {
+      const newPack = { ...currentPack, id: Date.now() };
+      setPacks([...packs, newPack]);
+    }
+    handleCloseModal();
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
-      <Card className="w-full max-w-4xl shadow-2xl rounded-2xl !bg-white">
-        <CardContent className="p-8">
-          <Typography
-            variant="h4"
-            className="font-extrabold text-center text-gray-800 mb-4"
-          >
-            Organization Management Dashboard
-          </Typography>
-          <Typography
-            variant="body1"
-            className="text-center text-gray-600 mb-8"
-          >
-            Welcome! Use this dashboard to create organizations, manage data,
-            and view analytics.
-          </Typography>
-
-          <Grid container spacing={4} justifyContent="center">
-            <Grid item xs={12} sm={6} md={4}>
-              <Card className="hover:shadow-xl transition-shadow rounded-xl">
-                <CardContent className="text-center">
-                  <Typography
-                    variant="h6"
-                    className="font-semibold text-gray-700 mb-2"
-                  >
-                    Create Organization
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    className="text-gray-500 mb-4"
-                  >
-                    Add a new organization with details like name, role, and
-                    more.
-                  </Typography>
-                  <Button
-                    component={Link}
-                    to="/CreateOrganization"
-                    variant="contained"
-                    className="!bg-blue-600 hover:!bg-blue-700 !rounded-xl"
-                  >
-                    Create
-                  </Button>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={4}>
-              <Card className="hover:shadow-xl transition-shadow rounded-xl">
-                <CardContent className="text-center">
-                  <Typography
-                    variant="h6"
-                    className="font-semibold text-gray-700 mb-2"
-                  >
-                    View Data
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    className="text-gray-500 mb-4"
-                  >
-                    View and manage all the existing organization data.
-                  </Typography>
-                  <Button
-                    component={Link}
-                    to="/data"
-                    variant="contained"
-                    className="!bg-green-600 hover:!bg-green-700 !rounded-xl"
-                  >
-                    View
-                  </Button>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={4}>
-              <Card className="hover:shadow-xl transition-shadow rounded-xl">
-                <CardContent className="text-center">
-                  <Typography
-                    variant="h6"
-                    className="font-semibold text-gray-700 mb-2"
-                  >
-                    Analytics
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    className="text-gray-500 mb-4"
-                  >
-                    Track key metrics and insights about your organizations.
-                  </Typography>
-                  <Button
-                    variant="contained"
-                    className="!bg-purple-600 hover:!bg-purple-700 !rounded-xl"
-                  >
-                    Explore
-                  </Button>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
+    <div className="p-6 max-w-5xl mx-auto">
+      <Card className="mb-6">
+        <CardContent className="flex justify-between items-center">
+          <Typography variant="h5">Welcome User 👋</Typography>
+          <Typography variant="h6">Total Packs: {packs.length}</Typography>
         </CardContent>
       </Card>
+
+      <div className="flex justify-end mb-4">
+        <Button
+          variant="contained"
+          startIcon={<Add />}
+          onClick={() => handleOpenModal()}
+        >
+          Add Pack
+        </Button>
+      </div>
+
+      <Paper className="overflow-x-auto">
+        <Table>
+          <TableHead>
+            <TableRow className="bg-gray-100">
+              <TableCell><strong>Name</strong></TableCell>
+              <TableCell><strong>Description</strong></TableCell>
+              <TableCell><strong>Actions</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {packs.map((pack) => (
+              <TableRow key={pack.id}>
+                <TableCell>{pack.name}</TableCell>
+                <TableCell>{pack.description}</TableCell>
+                <TableCell>
+                  <IconButton onClick={() => handleOpenModal(pack)}>
+                    <Edit />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+            {packs.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={3} className="text-center py-4">
+                  No packs available.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </Paper>
+
+      <Modal open={openModal} onClose={handleCloseModal}>
+        <Box className="bg-white p-6 rounded-xl w-full max-w-md mx-auto mt-40 shadow-lg space-y-4">
+          <Typography variant="h6">{isEditing ? 'Edit Pack' : 'Add Pack'}</Typography>
+          <TextField
+            label="Pack Name"
+            name="name"
+            fullWidth
+            value={currentPack.name}
+            onChange={handleChange}
+          />
+          <TextField
+            label="Description"
+            name="description"
+            fullWidth
+            multiline
+            rows={3}
+            value={currentPack.description}
+            onChange={handleChange}
+          />
+          <div className="flex justify-end gap-2">
+            <Button variant="outlined" onClick={handleCloseModal}>Cancel</Button>
+            <Button variant="contained" onClick={handleSubmit}>
+              {isEditing ? 'Update' : 'Add'}
+            </Button>
+          </div>
+        </Box>
+      </Modal>
     </div>
   );
 };
 
-export default Home;
+export default UserHomePage;

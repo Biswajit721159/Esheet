@@ -1,9 +1,11 @@
+const organizations = require("../models/organizations");
 const users = require("../models/users");
 
 const createUsers = async(req,res) => {
     try {
         const {email, fullName, password} = req.body;
-        const user = await users.create({email, fullName, password});
+        const user = await users.create({ email, fullName, password });
+        // await organizations.updateOne({ email: user.email }, { $push: { users: user._id } });
         res.status(201).json(user);
     } catch (error) {
         res.status(500).json({message: error.message});

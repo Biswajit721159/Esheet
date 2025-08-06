@@ -3,6 +3,10 @@ import { IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { Link } from "react-router-dom";
+import Divider from '@mui/material/Divider';
+import AddHomeIcon from '@mui/icons-material/AddHome';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import AddBusinessIcon from '@mui/icons-material/AddBusiness';
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -24,21 +28,31 @@ const Navbar = () => {
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex justify-between items-center p-4 border-b border-white">
-          <div className="text-lg font-bold">Menu</div>
+        <div className="flex justify-between items-center p-3 border-b border-white">
+          <div className="text-lg font-bold">Biswajit</div>
           <IconButton onClick={() => setOpen(false)} className="bg-gray-300 hover:bg-gray-500">
             <CloseIcon fontSize="small" />
           </IconButton>
         </div>
-        <div className="flex flex-col space-y-4 px-6 mt-6">
-            <Link  to="/" onClick={() => setOpen(false)} className="hover:text-gray-500">
+        <Divider/>
+        <div className="flex flex-col space-y-4 gap-3 px-6 mt-6">
+          <Link to="/" onClick={() => setOpen(false)} className="hover:text-gray-500">
+            <div className="flex items-center gap-2">
+              <AddHomeIcon />
               Home
+            </div>
           </Link>
-           <Link  to="/CreateOrganization" onClick={() => setOpen(false)} className="hover:text-gray-500">
+          <Link to="/CreateOrganization" onClick={() => setOpen(false)} className="hover:text-gray-500">
+            <div className="flex items-center gap-2">
+              <AddBoxIcon />
               Create Organization
+            </div>
           </Link>
           <Link  to="/Organizations" onClick={() => setOpen(false)} className="hover:text-gray-500">
-              Organizations
+            <div className="flex items-center gap-2">
+              <AddBusinessIcon/>
+            Organizations
+              </div>
           </Link>
         </div>
       </div>

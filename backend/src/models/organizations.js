@@ -34,6 +34,10 @@ const organizationSchema = new Schema(
         //     ref: "users",
         //     required: true,
         // },
+        totalUsers: {
+            type: Number,
+            default: 0,
+        },        
 		isBlackListUser: {
 			type: Boolean,
 			default: false,

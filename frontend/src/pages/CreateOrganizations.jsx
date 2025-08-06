@@ -15,7 +15,7 @@ const CreateOrganization = () => {
     event.preventDefault();
     try {
       setLoading(true);
-      let data = await createOrg({ userName, email, organizationName, phoneNumber });
+      await createOrg({ userName, email, organizationName, phoneNumber });
       toast.success('Organization created successfully');
     } catch (error) {
       toast.error(error?.message || 'Something went wrong');
@@ -25,17 +25,17 @@ const CreateOrganization = () => {
   };
 
   return (
-    <div className=" flex items-center justify-center bg-gray-100 p-4">
+    <div className="flex items-center justify-center p-4">
       <Box
         component="form"
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md space-y-6"
+        className="p-8 rounded-lg shadow-xl w-full max-w-md space-y-6 mt-10"
         sx={{
           borderRadius: '12px',
           boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
         }}
       >
-        <Typography variant="h5" component="h1" className="text-center text-gray-800 font-inter font-bold">
+        <Typography variant="h6" component="h4" className="text-center text-gray-800 font-inter font-bold">
           Create Organization
         </Typography>
 
@@ -90,7 +90,7 @@ const CreateOrganization = () => {
           variant="contained"
           color="primary"
           fullWidth
-          className="py-3 rounded-md shadow-lg hover:shadow-xl transition-all duration-300"
+          className="py-3 rounded-md shadow-none transition-all duration-300"
           sx={{
             borderRadius: '8px',
             backgroundColor: '#1976d2',

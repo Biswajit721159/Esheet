@@ -2,6 +2,7 @@ const organizations = require("../models/organizations");
 
 const createOrganization = async (req, res) => {
     try {
+        console.log(req.body);
         const { organizationName, userName, phoneNumber, email } = req.body;
         const organization = await organizations.create({ organizationName, userName, phoneNumber, email });
         res.status(201).json(organization);

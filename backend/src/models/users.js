@@ -42,6 +42,14 @@ const userSchema = new Schema(
 			type: Date,
 			default: "",
 		},
+		createdBy: {
+			type: Schema.Types.ObjectId,
+			ref: "user",
+		},
+		lastUpdatedBy: {
+			type: Schema.Types.ObjectId,
+			ref: "user",
+		},
 	},
 	{
 		timestamps: true,

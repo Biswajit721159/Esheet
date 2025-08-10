@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import Divider from '@mui/material/Divider';
 import AddHomeIcon from '@mui/icons-material/AddHome';
 import AddBoxIcon from '@mui/icons-material/AddBox';
@@ -13,6 +13,7 @@ const Navbar = () => {
   const links = ["Home", "Create user", "About", "Contact"];
 
   return (
+    <>
     <nav className="bg-blue-400 text-white">
       <div className="flex items-center justify-between px-4 py-3">
         <div className="flex items-center space-x-4">
@@ -36,19 +37,19 @@ const Navbar = () => {
         </div>
         <Divider/>
         <div className="flex flex-col space-y-4 gap-3 px-6 mt-6">
-          <Link to="/" onClick={() => setOpen(false)} className="hover:text-gray-500">
+          <Link to="/superAdmin" onClick={() => setOpen(false)} className="hover:text-gray-500">
             <div className="flex items-center gap-2">
               <AddHomeIcon />
               Home
             </div>
           </Link>
-          <Link to="/CreateOrganization" onClick={() => setOpen(false)} className="hover:text-gray-500">
+          <Link to="/superAdmin/CreateOrganization" onClick={() => setOpen(false)} className="hover:text-gray-500">
             <div className="flex items-center gap-2">
               <AddBoxIcon />
               Create Organization
             </div>
           </Link>
-          <Link  to="/Organizations" onClick={() => setOpen(false)} className="hover:text-gray-500">
+          <Link  to="/superAdmin/Organizations" onClick={() => setOpen(false)} className="hover:text-gray-500">
             <div className="flex items-center gap-2">
               <AddBusinessIcon/>
             Organizations
@@ -60,7 +61,9 @@ const Navbar = () => {
       {open && (
         <div className="fixed inset-0 bg-black bg-opacity-40 z-40" onClick={() => setOpen(false)} />
       )}
-    </nav>
+      </nav>
+      <Outlet />
+    </>
   );
 };
 

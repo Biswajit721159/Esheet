@@ -23,7 +23,7 @@ const userSchema = new Schema(
         },
         role: {
             type: Number,
-            enum: [1, 2],
+            enum: [1, 2],// 1-admin , 2-superadmin
             default : 1,
         },
 		passwordResetToken: {

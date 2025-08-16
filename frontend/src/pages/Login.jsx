@@ -5,6 +5,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { loginUsers } from '../apis/auth';
 import { toast } from 'react-toastify';
 import FullPageLoader from '../Loader/FullPageLoader';
+import { setUsers } from '../redux/user';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,6 +13,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const history = useNavigate();
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -22,6 +24,8 @@ const Login = () => {
     try {
       setLoading(true);
       let data = await loginUsers({ email, password });
+      setUsers(data.data);
+      history('/dashboard');
       toast.success('Login successful');
     } catch (e) {
       toast.error(e?.message || 'Something went wrong');

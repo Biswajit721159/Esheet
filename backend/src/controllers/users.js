@@ -30,8 +30,16 @@ const loginUsers = async (req, res) => {
             sameSite: "strict",      // Prevent CSRF
             maxAge: 24 * 60 * 60 * 1000 // 1 day in milliseconds
         });
+        delete user.password;
+        delete user.passwordResetToken;
+        delete user.passwordResetExpires;
+        delete user.createdAt;
+        delete user.updatedAt;
+        delete user.__v;
+        delete user.otpSaveTime;
 
-        res.status(200).json({ message: "Login successful" });
+
+        res.status(200).json({ message: "Login successful", data: user });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: error.message });

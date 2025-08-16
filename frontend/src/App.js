@@ -7,19 +7,21 @@ import Login from "./pages/Login";
 import Organizations from "./component/Organizations/Organizations";
 import RequireAuth from "./importants/RequireAuth";
 import NotFound from "./pages/NotFound";
+import HomePage from "./pages/HomePage";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="/Login" element={<Login />} />
         <Route path="*" element={<NotFound />} />
         <Route
           path="/superAdmin"
           element={
           <RequireAuth>
-             <Navbar />
-          </RequireAuth>
+              <Navbar />
+            </RequireAuth>
         }
         >
           <Route
